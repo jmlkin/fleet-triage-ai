@@ -31,12 +31,17 @@ This is the design decision that makes the repo usable by anyone, instantly:
 
 The core never imports `mcp` or `anthropic`; both higher layers call one public function, [`engine.analyze`](src/fleet_triage/engine.py) — so the CLI, the JSON, and the "talk to your fleet" answers can never disagree.
 
+```mermaid
+flowchart LR
+    D["data/fleet.json"] --> EN
+    R["config/ruleset.yaml"] --> EN
+    EN["core engine<br/>engine.analyze()<br/>score · cluster · rank"]
+    EN --> CLI["CLI report + JSON<br/>layer 1 · no key"]
+    EN --> MCP["MCP tools → Claude client<br/>layer 2 · no key"]
+    EN --> AI["--ai summary → Anthropic SDK<br/>layer 3 · opt-in key"]
 ```
- fleet.json ──▶ ┌─────────────────────────┐ ──▶ rich report + JSON      (layer 1: no key)
- ruleset.yaml ─▶│  core engine (Python)   │
-                │  score · cluster · rank │ ──▶ MCP tools ──▶ Claude client  (layer 2: no key)
-                └─────────────────────────┘ ──▶ --ai summary (Anthropic SDK) (layer 3: opt-in key)
-```
+
+> Full architecture — layers, the single-seam rule, determinism: [`docs/architecture.md`](docs/architecture.md).
 
 ## Quickstart (zero key, zero cost)
 
