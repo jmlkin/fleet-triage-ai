@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fleet-triage-ai"
+version = "0.3.0"
+description = "Policy-driven endpoint fleet-health engine with an MCP interface and optional bring-your-own-key AI. 100% synthetic data."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Jose Milan" }]
+keywords = ["endpoint-management", "mcp", "model-context-protocol", "fleet", "compliance", "ai", "anthropic", "claude", "devops", "sre"]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.2"]
+ai = ["anthropic>=0.40"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+fleet-triage = "fleet_triage.cli:app"
+fleet-triage-mcp = "fleet_triage.mcp_server:main"
+
+[project.urls]
+Homepage = "https://github.com/jmlkin/fleet-triage-ai"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,132 @@
+"""Seeded synthetic fleet generator.
+
+Produces a deterministic, story-shaped fleet so the triage output is compelling
+and reproducible. A fixed seed means anyone who regenerates gets byte-identical
+data — the committed data/fleet.json is the source of truth; this just documents
+how it was made. Zero real data: ids are FLT-*, owners are synthetic-user-*.
+"""
+
+from __future__ import annotations
+
+import json
+import random
+from pathlib import Path
+
+AS_OF = "2026-06-01T00:00:00Z"
+LATEST_PATCH = "2026-06"
+
+# role -> (count, candidate locations, candidate OSes)
+_ROLE_PLAN = {
+    "laptop": (90, ["REMOTE", "SEA", "NYC", "LON", "ATX"], ["macOS", "Windows"]),
+    "edit-bay": (30, ["SEA", "NYC", "LON", "ATX"], ["macOS"]),
+    "render-node": (30, ["SEA", "NYC", "ATX"], ["Ubuntu", "Windows"]),
+    "recording-booth": (30, ["SEA", "NYC", "LON", "ATX"], ["Windows"]),
+    "conference-room": (20, ["SEA", "NYC", "LON", "ATX"], ["Windows"]),
+}
+_OS_VERSIONS = {
+    "macOS": ["14.4", "14.5", "15.0"],
+    "Windows": ["10.0.19045", "11.0.22631", "11.0.26100"],
+    "Ubuntu": ["22.04", "24.04"],
+}
+
+
+def _checkin(rng: random.Random, days_ago_min: int, days_ago_max: int) -> str:
+    # AS_OF is 2026-06-01; subtract whole days. Kept as date-only midnight UTC.
+    from datetime import datetime, timedelta, timezone
+    base = datetime(2026, 6, 1, tzinfo=timezone.utc)
+    dt = base - timedelta(days=rng.randint(days_ago_min, days_ago_max),
+                          hours=rng.randint(0, 23), minutes=rng.randint(0, 59))
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def generate(count: int = 200, seed: int = 1337) -> dict:
+    rng = random.Random(seed)
+    endpoints: list[dict] = []
+    n = 0
+
+    for role, (role_count, locations, oses) in _ROLE_PLAN.items():
+        for _ in range(role_count):
+            n += 1
+            loc = rng.choice(locations)
+            os_name = rng.choice(oses)
+            ep = {
+                "device_id": f"FLT-{n:04d}",
+                "hostname": f"{role}-{loc.lower()}-{n:03d}",
+                "role": role,
+                "location": loc,
+                "os": os_name,
+                "os_version": rng.choice(_OS_VERSIONS[os_name]),
+                "patch_ring": rng.choice(["broad", "broad", "broad", "early"]),
+                "installed_patch_level": rng.choice([LATEST_PATCH, LATEST_PATCH, "2026-05"]),
+                "latest_available_patch": LATEST_PATCH,
+                "disk_encryption": "on",
+                "secure_boot": True,
+                "firewall_enabled": True,
+                "mdm_enrolled": True,
+                "edr_agent_healthy": True,
+                "last_checkin": _checkin(rng, 0, 7),
+                "uptime_days": rng.randint(1, 40),
+                "asset_owner": f"synthetic-user-{n:03d}",
+                "notes": "",
+            }
+            endpoints.append(ep)
+
+    by_role: dict[str, list[dict]] = {}
+    for ep in endpoints:
+        by_role.setdefault(ep["role"], []).append(ep)
+
+    # --- Planted, correlated problems (the stories the clustering should find) ---
+
+    # 1. Patch drift on render-nodes, concentrated in SEA.
+    render_nodes = by_role["render-node"]
+    sea_first = sorted(render_nodes, key=lambda e: (e["location"] != "SEA"))
+    for ep in sea_first[:18]:
+        ep["installed_patch_level"] = rng.choice(["2026-02", "2026-01"])  # 4-5 months behind
+        ep["uptime_days"] = rng.randint(60, 200)  # "never rebooted, always rendering"
+
+    # 2. Disk encryption off on a batch of edit-bays, all in ATX (bad gold image).
+    edit_bays = by_role["edit-bay"]
+    for ep in edit_bays:
+        ep["location"] = "ATX" if ep["location"] not in ("ATX",) and rng.random() < 0.4 else ep["location"]
+    atx_edit_bays = [e for e in edit_bays if e["location"] == "ATX"][:9]
+    for ep in atx_edit_bays:
+        ep["disk_encryption"] = "off"
+        ep["notes"] = "imaged from shared gold image GI-ATX-07"
+
+    # 3. Stale check-ins on offline recording-booths.
+    booths = by_role["recording-booth"]
+    for ep in booths[:6]:
+        ep["last_checkin"] = _checkin(rng, 30, 70)
+        ep["notes"] = "air-gapped booth; intermittent network"
+
+    # 4. Unmanaged-ring tail (~5%): highest-risk individuals.
+    tail = rng.sample(endpoints, k=max(1, count // 20))
+    for ep in tail:
+        ep["patch_ring"] = "unmanaged"
+        ep["mdm_enrolled"] = False
+
+    # 5. Scattered single-control failures for variety.
+    for ep in rng.sample(endpoints, k=6):
+        ep["firewall_enabled"] = False
+    for ep in rng.sample(endpoints, k=5):
+        ep["edr_agent_healthy"] = False
+    for ep in rng.sample(endpoints, k=4):
+        ep["secure_boot"] = False
+
+    # Normalize hostnames to final location (some locations were reassigned above).
+    for ep in endpoints:
+        idx = int(ep["device_id"].split("-")[1])
+        ep["hostname"] = f"{ep['role']}-{ep['location'].lower()}-{idx:03d}"
+
+    return {
+        "_comment": "100% synthetic data generated by fleet_triage.generator (seed 1337). No real systems or people.",
+        "as_of": AS_OF,
+        "endpoints": endpoints,
+    }
+
+
+def write(path: str | Path, count: int = 200, seed: int = 1337) -> int:
+    data = generate(count=count, seed=seed)
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    Path(path).write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    return len(data["endpoints"])

@@ -1,0 +1,872 @@
+﻿{
+  "generated_at": "2026-06-01T00:00:00+00:00",
+  "total": 200,
+  "compliant": 156,
+  "compliance_pct": 78.0,
+  "severity_counts": {
+    "healthy": 102,
+    "low": 58,
+    "medium": 36,
+    "critical": 4
+  },
+  "by_role": {
+    "render-node": {
+      "total": 30,
+      "compliant": 10,
+      "compliance_pct": 33.3
+    },
+    "edit-bay": {
+      "total": 30,
+      "compliant": 20,
+      "compliance_pct": 66.7
+    },
+    "recording-booth": {
+      "total": 30,
+      "compliant": 23,
+      "compliance_pct": 76.7
+    },
+    "laptop": {
+      "total": 90,
+      "compliant": 83,
+      "compliance_pct": 92.2
+    },
+    "conference-room": {
+      "total": 20,
+      "compliant": 20,
+      "compliance_pct": 100.0
+    }
+  },
+  "by_location": {
+    "SEA": {
+      "total": 44,
+      "compliant": 31,
+      "compliance_pct": 70.5
+    },
+    "ATX": {
+      "total": 61,
+      "compliant": 44,
+      "compliance_pct": 72.1
+    },
+    "NYC": {
+      "total": 41,
+      "compliant": 32,
+      "compliance_pct": 78.0
+    },
+    "REMOTE": {
+      "total": 20,
+      "compliant": 18,
+      "compliance_pct": 90.0
+    },
+    "LON": {
+      "total": 34,
+      "compliant": 31,
+      "compliance_pct": 91.2
+    }
+  },
+  "at_risk": [
+    {
+      "device_id": "FLT-0127",
+      "hostname": "render-node-atx-127",
+      "role": "render-node",
+      "location": "ATX",
+      "risk": 96,
+      "band": "critical",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0141",
+      "hostname": "render-node-sea-141",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 96,
+      "band": "critical",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0156",
+      "hostname": "recording-booth-sea-156",
+      "role": "recording-booth",
+      "location": "SEA",
+      "risk": 88,
+      "band": "critical",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        },
+        {
+          "control": "stale_checkin",
+          "points": 40,
+          "detail": "32 days since last check-in"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0133",
+      "hostname": "render-node-sea-133",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 72,
+      "band": "critical",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        },
+        {
+          "control": "edr_unhealthy",
+          "points": 20,
+          "detail": "EDR agent not reporting healthy"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0121",
+      "hostname": "render-node-atx-121",
+      "role": "render-node",
+      "location": "ATX",
+      "risk": 58,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        },
+        {
+          "control": "secure_boot_off",
+          "points": 8,
+          "detail": "secure boot disabled"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0151",
+      "hostname": "recording-booth-sea-151",
+      "role": "recording-booth",
+      "location": "SEA",
+      "risk": 55,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 10,
+          "detail": "1 month(s) behind (2026-05 -> 2026-06)"
+        },
+        {
+          "control": "stale_checkin",
+          "points": 40,
+          "detail": "49 days since last check-in"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0153",
+      "hostname": "recording-booth-nyc-153",
+      "role": "recording-booth",
+      "location": "NYC",
+      "risk": 55,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "firewall_off",
+          "points": 10,
+          "detail": "host firewall disabled"
+        },
+        {
+          "control": "stale_checkin",
+          "points": 40,
+          "detail": "34 days since last check-in"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0154",
+      "hostname": "recording-booth-nyc-154",
+      "role": "recording-booth",
+      "location": "NYC",
+      "risk": 55,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 10,
+          "detail": "1 month(s) behind (2026-05 -> 2026-06)"
+        },
+        {
+          "control": "stale_checkin",
+          "points": 40,
+          "detail": "30 days since last check-in"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0098",
+      "hostname": "edit-bay-atx-098",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 54,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        },
+        {
+          "control": "patch_drift",
+          "points": 10,
+          "detail": "1 month(s) behind (2026-05 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0102",
+      "hostname": "edit-bay-atx-102",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 54,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        },
+        {
+          "control": "patch_drift",
+          "points": 10,
+          "detail": "1 month(s) behind (2026-05 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0104",
+      "hostname": "edit-bay-atx-104",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 54,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        },
+        {
+          "control": "patch_drift",
+          "points": 10,
+          "detail": "1 month(s) behind (2026-05 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0024",
+      "hostname": "laptop-remote-024",
+      "role": "laptop",
+      "location": "REMOTE",
+      "risk": 50,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "patch_drift",
+          "points": 10,
+          "detail": "1 month(s) behind (2026-05 -> 2026-06)"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0113",
+      "hostname": "edit-bay-atx-113",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0122",
+      "hostname": "render-node-atx-122",
+      "role": "render-node",
+      "location": "ATX",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0123",
+      "hostname": "render-node-sea-123",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0124",
+      "hostname": "render-node-nyc-124",
+      "role": "render-node",
+      "location": "NYC",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0125",
+      "hostname": "render-node-atx-125",
+      "role": "render-node",
+      "location": "ATX",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0126",
+      "hostname": "render-node-nyc-126",
+      "role": "render-node",
+      "location": "NYC",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0128",
+      "hostname": "render-node-nyc-128",
+      "role": "render-node",
+      "location": "NYC",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0129",
+      "hostname": "render-node-atx-129",
+      "role": "render-node",
+      "location": "ATX",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0130",
+      "hostname": "render-node-sea-130",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0131",
+      "hostname": "render-node-nyc-131",
+      "role": "render-node",
+      "location": "NYC",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0132",
+      "hostname": "render-node-sea-132",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0136",
+      "hostname": "render-node-nyc-136",
+      "role": "render-node",
+      "location": "NYC",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0143",
+      "hostname": "render-node-sea-143",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0144",
+      "hostname": "render-node-sea-144",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0147",
+      "hostname": "render-node-sea-147",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0148",
+      "hostname": "render-node-sea-148",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "5 month(s) behind (2026-01 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0150",
+      "hostname": "render-node-sea-150",
+      "role": "render-node",
+      "location": "SEA",
+      "risk": 48,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "patch_drift",
+          "points": 40,
+          "detail": "4 month(s) behind (2026-02 -> 2026-06)"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0152",
+      "hostname": "recording-booth-nyc-152",
+      "role": "recording-booth",
+      "location": "NYC",
+      "risk": 44,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "stale_checkin",
+          "points": 40,
+          "detail": "48 days since last check-in"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0155",
+      "hostname": "recording-booth-lon-155",
+      "role": "recording-booth",
+      "location": "LON",
+      "risk": 44,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "stale_checkin",
+          "points": 40,
+          "detail": "37 days since last check-in"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0175",
+      "hostname": "recording-booth-lon-175",
+      "role": "recording-booth",
+      "location": "LON",
+      "risk": 44,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0091",
+      "hostname": "edit-bay-atx-091",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 42,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0092",
+      "hostname": "edit-bay-atx-092",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 42,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0093",
+      "hostname": "edit-bay-atx-093",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 42,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0094",
+      "hostname": "edit-bay-atx-094",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 42,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0095",
+      "hostname": "edit-bay-atx-095",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 42,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0107",
+      "hostname": "edit-bay-atx-107",
+      "role": "edit-bay",
+      "location": "ATX",
+      "risk": 42,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "encryption_off",
+          "points": 35,
+          "detail": "disk encryption is off"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0050",
+      "hostname": "laptop-lon-050",
+      "role": "laptop",
+      "location": "LON",
+      "risk": 40,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    },
+    {
+      "device_id": "FLT-0062",
+      "hostname": "laptop-atx-062",
+      "role": "laptop",
+      "location": "ATX",
+      "risk": 40,
+      "band": "medium",
+      "compliant": false,
+      "factors": [
+        {
+          "control": "mdm_unenrolled",
+          "points": 25,
+          "detail": "not enrolled in MDM"
+        },
+        {
+          "control": "unmanaged_ring",
+          "points": 15,
+          "detail": "device is on the unmanaged patch ring"
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "root_cause": "patch_drift",
+      "title": "Patch drift",
+      "affected_count": 18,
+      "correlate": "role=render-node (18/18), location=SEA (10/18)",
+      "example_device_ids": [
+        "FLT-0127",
+        "FLT-0141",
+        "FLT-0133",
+        "FLT-0121"
+      ],
+      "runbook_key": "patch-drift-render-nodes"
+    },
+    {
+      "root_cause": "encryption_off",
+      "title": "Disk encryption disabled",
+      "affected_count": 9,
+      "correlate": "role=edit-bay (9/9), location=ATX (9/9)",
+      "example_device_ids": [
+        "FLT-0098",
+        "FLT-0102",
+        "FLT-0104",
+        "FLT-0091"
+      ],
+      "runbook_key": "encryption-off-edit-bays"
+    },
+    {
+      "root_cause": "mdm_unenrolled",
+      "title": "Unmanaged / not MDM-enrolled",
+      "affected_count": 7,
+      "correlate": "role=laptop (3/7)",
+      "example_device_ids": [
+        "FLT-0024",
+        "FLT-0113",
+        "FLT-0131",
+        "FLT-0136"
+      ],
+      "runbook_key": "mdm-unenrolled-laptops"
+    },
+    {
+      "root_cause": "stale_checkin",
+      "title": "Stale MDM check-in",
+      "affected_count": 6,
+      "correlate": "role=recording-booth (6/6), location=NYC (3/6)",
+      "example_device_ids": [
+        "FLT-0156",
+        "FLT-0151",
+        "FLT-0153",
+        "FLT-0154"
+      ],
+      "runbook_key": "stale-checkin-booths"
+    }
+  ]
+}

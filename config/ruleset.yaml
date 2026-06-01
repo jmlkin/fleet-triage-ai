@@ -1,0 +1,42 @@
+# Fleet Triage AI — compliance & risk policy (policy-as-config)
+#
+# Every threshold and weight that defines "healthy" lives here, not in code.
+# This is the single most important file for adapting the tool to a real org:
+# point it at your own baseline (CIS, internal hardening standard, etc.) and the
+# engine re-scores the whole fleet. The Python never hardcodes a number.
+
+# A device is COMPLIANT only if ALL hard-gate controls below pass.
+compliance:
+  max_patch_drift_months: 2     # months behind latest available patch
+  stale_checkin_days: 14        # no MDM check-in within N days => non-compliant
+  require_disk_encryption: true
+  require_mdm_enrolled: true
+  require_edr_healthy: true
+
+# Per-control penalties summed into a 0-100 per-device risk score.
+risk_weights:
+  encryption_off: 35
+  mdm_unenrolled: 25
+  patch_drift_per_month: 10     # multiplied by months behind...
+  patch_drift_cap: 40           # ...but capped here
+  edr_unhealthy: 20
+  firewall_off: 10
+  secure_boot_off: 8
+  unmanaged_ring: 15
+  stale_checkin_tiers:          # evaluated top-to-bottom; first match wins
+    - { days: 60, points: 50 }
+    - { days: 30, points: 40 }
+    - { days: 14, points: 20 }
+
+# Specialty machines carry more blast radius, so the same fault scores higher.
+role_multipliers:
+  render-node: 1.2
+  edit-bay: 1.2
+  recording-booth: 1.1
+  laptop: 1.0
+  conference-room: 1.0
+
+bands:
+  at_risk_threshold: 40         # risk >= this => surfaced in the "at risk" list
+  medium_min: 40
+  critical_min: 70

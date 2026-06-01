@@ -1,0 +1,44 @@
++-------------------------------------------------- Fleet Triage AI ---------------------------------------------------+
+| FLEET HEALTH   200 endpoints   as of 2026-06-01                                                                      |
+| Compliant 156/200  (78.0%)     healthy 102  low 58  medium 36  critical 4                                            |
++----------------------------------------------------------------------------------------------------------------------+
+                                                  Root-cause clusters                                                   
++----------------------------------------------------------------------------------------------------------------------+
+| Root cause                     |  Count | Correlates with                                 | Runbook                  |
+|--------------------------------+--------+-------------------------------------------------+--------------------------|
+| Patch drift                    |     18 | role=render-node (18/18), location=SEA (10/18)  | patch-drift-render-nodes |
+| Disk encryption disabled       |      9 | role=edit-bay (9/9), location=ATX (9/9)         | encryption-off-edit-bays |
+| Unmanaged / not MDM-enrolled   |      7 | role=laptop (3/7)                               | mdm-unenrolled-laptops   |
+| Stale MDM check-in             |      6 | role=recording-booth (6/6), location=NYC (3/6)  | stale-checkin-booths     |
++----------------------------------------------------------------------------------------------------------------------+
+                                                  At-risk devices (40)                                                  
++----------------------------------------------------------------------------------------------------------------------+
+|   Risk | Device                       | Role               | Loc      | Top issue                                    |
+|--------+------------------------------+--------------------+----------+----------------------------------------------|
+|     96 | render-node-atx-127          | render-node        | ATX      | 5 month(s) behind (2026-01 -> 2026-06)       |
+|     96 | render-node-sea-141          | render-node        | SEA      | 4 month(s) behind (2026-02 -> 2026-06)       |
+|     88 | recording-booth-sea-156      | recording-booth    | SEA      | 32 days since last check-in                  |
+|     72 | render-node-sea-133          | render-node        | SEA      | 4 month(s) behind (2026-02 -> 2026-06)       |
+|     58 | render-node-atx-121          | render-node        | ATX      | 5 month(s) behind (2026-01 -> 2026-06)       |
+|     55 | recording-booth-sea-151      | recording-booth    | SEA      | 49 days since last check-in                  |
+|     55 | recording-booth-nyc-153      | recording-booth    | NYC      | 34 days since last check-in                  |
+|     55 | recording-booth-nyc-154      | recording-booth    | NYC      | 30 days since last check-in                  |
+|     54 | edit-bay-atx-098             | edit-bay           | ATX      | disk encryption is off                       |
+|     54 | edit-bay-atx-102             | edit-bay           | ATX      | disk encryption is off                       |
+|     54 | edit-bay-atx-104             | edit-bay           | ATX      | disk encryption is off                       |
+|     50 | laptop-remote-024            | laptop             | REMOTE   | not enrolled in MDM                          |
+|     48 | edit-bay-atx-113             | edit-bay           | ATX      | not enrolled in MDM                          |
+|     48 | render-node-atx-122          | render-node        | ATX      | 5 month(s) behind (2026-01 -> 2026-06)       |
+|     48 | render-node-sea-123          | render-node        | SEA      | 5 month(s) behind (2026-01 -> 2026-06)       |
++----------------------------------------------------------------------------------------------------------------------+
+...and 25 more. Use --format json for the full list.
+           Compliance by role           
++--------------------------------------+
+| Role            | Compliant |      % |
+|-----------------+-----------+--------|
+| render-node     |     10/30 |  33.3% |
+| edit-bay        |     20/30 |  66.7% |
+| recording-booth |     23/30 |  76.7% |
+| laptop          |     83/90 |  92.2% |
+| conference-room |     20/20 | 100.0% |
++--------------------------------------+
